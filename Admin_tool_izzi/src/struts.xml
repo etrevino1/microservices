@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.custom.i18n.resources" value="messages" />
+	<constant name="struts.enable.SlashesInActionNames" value="true" />
+	<constant name="struts.custom.i18n.resources" value="global" />
+
+	<package name="default" namespace="/" extends="struts-default">
+		<action name="findSubscriber" class="subscriberAction">
+			<result name="success">subscriber.jsp</result>
+		</action>
+		<action name="locale" class="localeAction">
+			<result name="SUCCESS" type="redirect">findSubscriber</result>
+		</action>
+		<action name="luhn" class="miradaEquipoAction">
+			<result name="success">luhn.jsp</result>
+		</action>
+	</package>
+
+	<package name="subscriber" namespace="/suscriptor" extends="struts-default">
+		<action name="newSubscriber" method="newSubscriber" class="subscriberAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">findSubscriber</param>
+				<param name="nameSpace">/</param>
+			</result>
+			<result name="error" type="redirectAction">
+				<param name="actionName">findSubscriber</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+		<action name="deleteSubscriber" method="deleteSubscriber" class="subscriberAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">findSubscriber</param>
+				<param name="nameSpace">/</param>
+			</result>
+			<result name="error" type="redirectAction">
+				<param name="actionName">findSubscriber</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="equipo" namespace="/equipo" extends="struts-default">
+		<action name="mirada" class="miradaEquipoAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">/luhn</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="service" namespace="/service" extends="struts-default">
+		<action name="mirada" class="serviceAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">findSubscriber</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+		<action name="addPackage" method="addPackage" class="serviceAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">findSubscriber</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="cpe" namespace="/cpe" extends="struts-default">
+		<action name="deleteCPE" class="cpeAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">findSubscriber</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+		<action name="addCPE" method="addCPE" class="cpeAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">findSubscriber</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="activation" namespace="/ird" extends="struts-default">
+		<action name="activateAccount" class="activateAccount">
+			<result name="success" type="redirectAction">
+				<param name="actionName">findSubscriber</param>
+				<param name="nameSpace">/</param>
+			</result>
+		</action>
+	</package>
+</struts>

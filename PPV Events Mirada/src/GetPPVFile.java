@@ -31,12 +31,13 @@ public class GetPPVFile {
 		System.out.println(args[0]);
 		System.out.println(args[1]);
 		System.out.println(args[2]);
+		System.out.println(args[3]);
 		
 		GetPPVFile ppv = new GetPPVFile();
-		ppv.getJSONEvents(args[0], args[1], args[2]);
+		ppv.getJSONEvents(args[0], args[1], args[2], args[3]);
 	}
 
-	private void getJSONEvents(String channelExternalID, String startDate, String endDate) throws ParseException{
+	private void getJSONEvents(String channelExternalID, String startDate, String endDate, String node) throws ParseException{
 		RestTemplate restTemplate = new RestTemplate();
 		List<Event> events = null; 
 
@@ -46,7 +47,14 @@ public class GetPPVFile {
 		headers.set("IRIS-HW-DEVICE-ID", "1");
 		
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		String event = restTemplate.postForObject("http://172.20.183.55:8888/managetv/tvinfo/events/schedule?serviceId=" + channelExternalID + "&start=" + (new DateTime(startDate, DateTimeZone.UTC)) + "&end=" + (new DateTime(endDate, DateTimeZone.UTC)) + "&view=ppv-csv-deliveries", entity, String.class);
+		String url = "";
+		if(node.equals("mex")){
+			url ="http://172.20.183.55:8888";
+		}else if(node.equals("mty")){
+			url ="http://172.18.1.234:8888";
+		}
+		
+		String event = restTemplate.postForObject(url + "/managetv/tvinfo/events/schedule?serviceId=" + channelExternalID + "&start=" + (new DateTime(startDate, DateTimeZone.UTC)) + "&end=" + (new DateTime(endDate, DateTimeZone.UTC)) + "&view=ppv-csv-deliveries", entity, String.class);
 		
 		events = getEvents(event);
 		

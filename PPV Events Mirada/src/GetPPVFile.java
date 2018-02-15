@@ -59,7 +59,7 @@ public class GetPPVFile {
 		events = getEvents(event);
 		
 //		eventsToString(events);
-		eventsToFile(events);
+		eventsToFile(events, node);
 	}
 
 	private List<Event> getEvents(String superEvent){
@@ -83,12 +83,12 @@ public class GetPPVFile {
 		}
 	}
 	
-	private void eventsToFile(List<Event> events){
+	private void eventsToFile(List<Event> events, String node){
 		BufferedWriter bw = null;
 		String heads = "SERVICE_EXTERNAL _REF\tEVENT_EXTERNAL_REF\tFECHA_INICIO	FECHA_FIN\tTITULO\tRPT\tPRECIO_CC\tPRECIO_SUC\tPRECIO_WEB\tPRECIO_IMPULSO\tCLASIFICACION\tDESCRIPCION\tFECHA_DISPONIBLE\tFECHA_LIMITE_CANCELACION\tTECNOLOGIA\tCATEGORIA" + System.lineSeparator();
 		
 		try{
-			bw = new BufferedWriter(new FileWriter("C:\\Users\\esuarez\\Desktop\\PPV Mirada\\Eventos " +  (new SimpleDateFormat("yyyyMMdd HHmmss")).format(Calendar.getInstance().getTime()) + ".txt"));
+			bw = new BufferedWriter(new FileWriter("C:\\Users\\esuarez\\Desktop\\PPV Mirada\\Eventos " +  (new SimpleDateFormat("yyyyMMdd HHmmss")).format(Calendar.getInstance().getTime()) + " " + node + ".txt"));
 			bw.write(heads);
 			
 			Iterator<Event> it = events.iterator();

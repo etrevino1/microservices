@@ -47,18 +47,18 @@ class DummyDataCLR implements CommandLineRunner {
 
 	}
 }
-//
-//@RefreshScope
-//@RestController
-//class MessageRestController {
-//	@Value("${message}")
-//	private String msg;
-//	
-//	@RequestMapping("/message")
-//	String message() {
-//		return this.msg;
-//	}
-//}
+
+@RefreshScope
+@RestController
+class MessageRestController {
+	@Value("${message}")
+	private String msg;
+	
+	@RequestMapping("/message")
+	String message() {
+		return this.msg;
+	}
+}
 
 @RepositoryRestResource
 interface ReservationRepository extends JpaRepository<Reservation, Long>{
